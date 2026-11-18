@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fekra – Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap">
+<style>
+:root{--ol:#b0103f;--dk:#fff;--hd:#9c0b38;--bg:#fff8f9;--cd:#fff;--tx:#000;--mu:#222;--ln:#f1d6dd;--wn:#555;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--ol:#a3294a;--dk:#000;--hd:#e8909f;--bg:#0e0b0b;--cd:#1b1515;--tx:#f3eaea;--mu:#bdaaaa;--ln:#3d2c2c;--wn:#777;color-scheme:dark}}
+:root[data-theme="dark"]{--ol:#a3294a;--dk:#000;--hd:#e8909f;--bg:#0e0b0b;--cd:#1b1515;--tx:#f3eaea;--mu:#bdaaaa;--ln:#3d2c2c;--wn:#777;color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--tx)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--cd);z-index:30}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--cd);color:var(--tx);border-bottom:3px solid var(--ol)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px}
+.top b{font-size:18px}.top div{display:flex;gap:6px;align-items:center}
+nav{display:flex;gap:4px;overflow-x:auto;padding:0 10px 8px;scrollbar-width:none}
+nav a{color:var(--tx);text-decoration:none;white-space:nowrap;padding:7px 12px;border-radius:999px;font-size:14px}
+nav a.on{background:var(--ol);color:#fff}
+main{max-width:760px;margin:0 auto;padding:16px 14px 48px}
+h1{font-size:24px;margin:.2em 0 .5em;color:var(--hd)}h2{font-size:18px;margin:1.2em 0 .5em;color:var(--hd)}h3{margin:0;font-size:17px}
+p{margin:.4em 0}code{color:var(--mu);font-size:11px;font-weight:400}
+.card,.tiles>div,fieldset{background:var(--cd);border:1px solid var(--ln);border-radius:14px;padding:14px;margin:0 0 12px}
+button,.btn{background:var(--ol);color:#fff;border:0;border-radius:10px;padding:10px 14px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}
+button:disabled{opacity:.5}
+.ghost{background:transparent;color:var(--hd);border:1px solid var(--ln)}.danger{background:var(--wn)}
+.chip{background:var(--cd);color:var(--hd);border:1px solid var(--ln);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;text-decoration:none}
+.chip.on{background:var(--ol);color:#fff}header .chip{background:transparent;color:var(--hd);border-color:var(--ln)}
+label{display:block;margin:0 0 10px;font-weight:600;font-size:14px}label code{float:right}
+input,select,textarea{width:100%;font:inherit;padding:10px;margin-top:4px;border:1px solid var(--ln);border-radius:10px;background:var(--bg);color:var(--tx)}
+textarea{min-height:90px}.ck{display:flex;gap:8px;font-weight:400;align-items:center}.ck input{width:auto;margin:0}
+.b{font-size:12px;padding:2px 9px;border-radius:999px;background:var(--ln);white-space:nowrap;color:var(--tx)}
+.b.published,.b.accepted,.b.active{background:var(--ol);color:#fff}.b.closed,.b.rejected,.b.withdrawn{background:var(--wn);color:#fff}
+.row{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}.m{color:var(--mu);font-size:14px;margin:.2em 0}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.tiles>div{text-align:center;font-size:14px;color:var(--mu)}.tiles b{display:block;font-size:26px;color:var(--hd)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.hero{background:var(--dk);color:#fff;border-radius:16px;padding:24px 18px;margin-bottom:14px}.hero h1{color:#fff}.hero .m{color:#e6caca}
+.chat{display:flex;flex-direction:column;gap:6px;margin:10px 0;max-height:46vh;overflow-y:auto}
+.msg{max-width:82%;padding:8px 12px;border-radius:14px;background:var(--ln);color:var(--tx)}.msg.me{align-self:flex-end;background:var(--ol);color:#fff}
+.flag{color:var(--wn);font-size:14px}.tabs{display:flex;gap:8px;margin-bottom:12px}.note{font-size:12px;color:var(--mu);text-align:center;margin-top:24px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--dk);color:#fff;padding:10px 16px;border-radius:999px;z-index:40;font-size:14px;max-width:90vw}
+body{font-size:19px;font-weight:700}
+h1{font-size:32px;font-weight:800}h2{font-size:24px;font-weight:800}h3{font-size:21px;font-weight:800}
+.top b{font-size:23px;font-weight:800}nav a,.chip{font-size:17px;font-weight:700}
+.m,label,.tiles>div,.flag{font-size:17px;font-weight:700}.b{font-size:14px;font-weight:700}code{font-size:13px;font-weight:700}
+.ck{font-weight:700}.tiles b{font-size:32px}.note,.toast{font-size:15px}button,.btn{font-size:18px;font-weight:800}
+.top b.brand{font-size:38px;font-weight:900;color:var(--hd);letter-spacing:.5px;line-height:1.1}
+.story{border-left:6px solid var(--ol)}.story p{margin:.7em 0}
+body{font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fff 0,var(--bg) 360px) no-repeat,var(--bg)}
+header{background:rgba(255,255,255,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--ln);box-shadow:0 2px 16px rgba(176,16,63,.08)}
+nav a{border-radius:12px}nav a.on{background:linear-gradient(135deg,#c4154a,#9c0b38);color:#fff;box-shadow:0 4px 12px rgba(176,16,63,.3)}
+h1,h2{letter-spacing:-.02em}
+.card,.tiles>div,fieldset{border-radius:20px;border:1px solid var(--ln);box-shadow:0 6px 22px rgba(176,16,63,.07);padding:18px}
+button,.btn{background:linear-gradient(135deg,#c4154a,#9c0b38);border-radius:14px;padding:12px 20px;box-shadow:0 6px 16px rgba(176,16,63,.3);transition:transform .15s}
+button:active,.btn:active{transform:scale(.97)}
+.ghost{background:#fff;color:var(--hd);border:2px solid var(--ol);box-shadow:none}
+.chip{background:#fff;color:var(--hd);box-shadow:none;padding:8px 14px}.chip.on{background:var(--ol);color:#fff}
+input,select,textarea{border:2px solid var(--ln);border-radius:14px;background:#fff;padding:12px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ol);box-shadow:0 0 0 4px rgba(176,16,63,.15)}
+.hero{background:linear-gradient(135deg,#fff 0%,#ffe0e8 100%);color:var(--tx);border:1px solid var(--ln);border-radius:28px;padding:34px 22px;box-shadow:0 14px 40px rgba(176,16,63,.16);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,rgba(196,21,74,.35),transparent 70%)}
+.hero>*{position:relative;z-index:1}.hero h1{color:var(--hd);font-size:38px;line-height:1.1;font-weight:900}.hero .m{color:var(--mu)}
+.card.story{border-left:6px solid var(--ol);background:linear-gradient(135deg,#fff,#fff0f3)}
+.msg{border-radius:18px;background:#f8e8ed}.msg.me{background:linear-gradient(135deg,#c4154a,#9c0b38);color:#fff}
+.b{border-radius:8px}.tiles b{color:var(--ol)}
+.toast{background:var(--ol);color:#fff;box-shadow:0 8px 24px rgba(176,16,63,.4)}
+h1,h2,h3,.hero h1{color:#000}
+:root:root:root{--ol:#b0103f;--dk:#fff;--hd:#9c0b38;--bg:#fff8f9;--cd:#fff;--tx:#000;--mu:#222;--ln:#f1d6dd;--wn:#555;color-scheme:light}
+body{color:#000}
+:root:root:root{--bg:#f6f5f5;--ln:#e3dfe0;--mu:#3d3a3b}
+body{font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:17px;font-weight:500;line-height:1.6;background:var(--bg)}
+main{max-width:980px;padding:28px 20px 64px}
+header{background:#fff;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;border-bottom:1px solid var(--ln)}
+.top{padding:14px 20px 6px}.top b.brand{font-size:30px;font-weight:800;letter-spacing:-.03em}
+nav{padding:0 14px;gap:2px}
+nav a{border-radius:0;padding:10px 14px;font-size:15px;font-weight:600;color:#000;border-bottom:3px solid transparent}
+nav a.on{background:transparent;color:var(--ol);box-shadow:none;border-bottom-color:var(--ol)}
+.chip,header .chip{border-radius:6px;font-size:14px;font-weight:600;padding:7px 12px;border:1px solid #cfc8ca;background:#fff;color:#000;text-transform:capitalize}
+.chip.on{background:var(--ol);color:#fff;border-color:var(--ol)}
+h1{font-size:34px;font-weight:800;letter-spacing:-.03em;line-height:1.15}
+h2{font-size:22px;font-weight:700;letter-spacing:-.02em;margin:1.8em 0 .6em}h3{font-size:18px;font-weight:700}
+.m,.tiles>div,.flag{font-size:15px;font-weight:500}label{font-size:15px;font-weight:600}
+code{font-size:12px;font-weight:500;color:#555}.ck{font-weight:500}
+.b{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-radius:4px;padding:3px 8px}
+.note{font-size:13px;font-weight:500}
+.card,.tiles>div,fieldset{border-radius:12px;border:1px solid var(--ln);box-shadow:none;padding:20px;background:#fff}
+button,.btn{background:var(--ol);border-radius:8px;padding:11px 20px;box-shadow:none;font-size:15px;font-weight:600}
+.ghost{background:#fff;color:#000;border:1px solid #cfc8ca;box-shadow:none}.danger{background:#222}
+input,select,textarea{border:1px solid #cfc8ca;border-radius:8px;padding:11px 12px;font-size:16px;font-weight:500}
+input:focus,select:focus,textarea:focus{border-color:var(--ol);box-shadow:0 0 0 3px rgba(176,16,63,.12)}
+.hero{background:#fff;border:1px solid var(--ln);border-left:6px solid var(--ol);border-radius:12px;box-shadow:none;padding:40px 28px}
+.hero::after{display:none}.hero h1{font-size:42px;line-height:1.1;font-weight:800;letter-spacing:-.03em}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ol);margin:0 0 12px}
+.card.story{border-left:4px solid var(--ol);background:#fff}
+.tiles>div{text-align:left;border-top:3px solid var(--ol)}.tiles b{font-size:30px;font-weight:800;color:#000}
+.step i{border-radius:8px;background:var(--ol);width:32px;height:32px;font-size:15px}.step p{font-weight:500}
+.msg{border-radius:10px;background:#f0eeee;font-weight:500}.msg.me{background:var(--ol);color:#fff}
+.toast{border-radius:8px;background:#111;font-size:14px;font-weight:600;box-shadow:none}
+@media(min-width:820px){#list{display:grid;grid-template-columns:1fr 1fr;gap:16px}#list>p{grid-column:1/-1}#list .card{margin:0}.tiles{grid-template-columns:repeat(4,1fr)}}
+.step{display:flex;gap:12px;align-items:flex-start;margin:14px 0 0}.step p{margin:0}.step i{flex:none;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#c4154a,#9c0b38);color:#fff;font-style:normal;font-weight:800;display:grid;place-items:center}
+</style></head><body>
+<header><div class="top"><b class="brand">Fekra</b><div id="who"></div></div><nav id="nav"></nav></header>
+<main id="app"></main><div class="toast" id="toast" hidden></div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const IND=['Fintech','E-commerce','Agritech','Healthcare','Education','Food & Beverage','Clean Energy','Logistics'];
+const TYP=['Product','Service','Marketplace','Subscription / SaaS'];
+const STG=['idea','prototype','mvp','early_revenue','growth'];
+const egp=n=>Number(n).toLocaleString('en-US')+' EGP',label=s=>String(s).replace(/_/g,' ');
+const mk=(id,own,by,title,biz,desc,ind,typ,fund,mkt,stage,status)=>({id,own,by,title,business_name:biz,description:desc,industry_id:ind,idea_type_id:typ,funding_needed:fund,currency:'EGP',target_market:mkt,idea_stage:stage,status});
+const S={logged:false,role:null,tab:'signup',page:'',edit:null,cur:'c1',open:{},msgFor:null,f:{q:'',ind:'',max:'',stage:''},
+me:{full_name:'Nour Hassan',email:'nour@example.com',phone:'+20 100 123 4567',city:'Cairo',avatar_url:'',website_url:'https://nilefresh.example',bio:'Agri-engineer building hydroponic farms for Greater Cairo.',investor_bio:'Angel investor backing early-stage Egyptian founders.',min_funding:200000,max_funding:2000000,preferred_idea_stage:'mvp',ind:[0,5,6],typ:[0,2]},
+ideas:[
+mk('i1','me','','Nile Fresh Hydroponics','Nile Fresh','Rooftop hydroponic farms supplying pesticide-free greens to Cairo restaurants and supermarkets all year round.',3,1,850000,'Restaurants and supermarkets in Greater Cairo','mvp','published'),
+mk('i2','me','','Zamalek Study Hub','StudyHub','A bilingual co-study space and tutoring marketplace for university and IGCSE students.',5,2,300000,'Students aged 15–22 in central Cairo','idea','draft'),
+mk('i3','o','Omar Adel','Koshary-to-Go','Koshary Express','Cloud-kitchen network delivering fresh koshary in 20 minutes with a loyalty app for regulars.',6,3,450000,'Office workers in Nasr City and Maadi','early_revenue','published'),
+mk('i4','o','Salma Ibrahim','SolarSouq','SolarSouq','Online marketplace that lets households compare and finance rooftop solar installers.',7,3,1500000,'Homeowners in New Cairo and 6th of October','prototype','published'),
+mk('i5','o','Karim Nabil','Fatora Easy','Fatora','Simple e-invoicing and tax filing software for small shops, fully in Arabic.',1,4,600000,'Small retailers and freelancers','mvp','published'),
+mk('i6','o','Yara Mostafa','HakimNow','HakimNow','Home-visit nursing and teleconsultations booked in a few taps.',4,2,1200000,'Families in Greater Cairo','growth','published')],
+inv:{v1:{name:'Hesham Mansour',bio:'Former CFO backing agri and clean-tech startups.',min:500000,max:3000000,stage:'mvp'},v2:{name:'Laila Samir',bio:'Angel investor and first-cheque specialist.',min:100000,max:1000000,stage:'idea'}},
+ints:[{id:'n1',idea:'i1',inv:'v1',msg:'Your rooftop model fits our agritech focus. Can we talk numbers?',status:'active'},{id:'n2',idea:'i1',inv:'v2',msg:'Love the pilot results. Keen to learn more.',status:'active'},{id:'n3',idea:'i3',inv:'me',msg:'Interested in the cloud-kitchen model.',status:'active'}],
+cons:[{id:'c1',int:'n2',side:'e',with:'Laila Samir',idea:'Nile Fresh Hydroponics',status:'accepted',msgs:[{f:'t',b:'Hi Nour, loved the pitch. Do you have pilot numbers?'},{f:'m',b:'Yes, 3 pilot rooftops running since March.'}]},
+{id:'c2',int:'n3',side:'i',with:'Omar Adel',idea:'Koshary-to-Go',status:'accepted',msgs:[{f:'t',b:'Thanks for your interest! Happy to share our deck.'}]}],
+flags:{i5:'Possible misleading revenue claim'},
+users:[{n:'Omar Adel',r:'entrepreneur',s:0},{n:'Salma Ibrahim',r:'entrepreneur',s:0},{n:'Karim Nabil',r:'entrepreneur',s:0},{n:'Hesham Mansour',r:'investor',s:0},{n:'Laila Samir',r:'investor',s:0}]};
+const REPLIES=['Sounds good. Can you share your financial projections?','Great, can we schedule a call this week?','Noted. What is your timeline for the funding round?'];
+let tt;const toast=m=>{const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,2400)};
+const go=h=>location.hash==='#'+h?render():location.hash=h;
+const opt=(l,c)=>l.map(([v,t])=>`<option value="${v}"${String(c)===String(v)?' selected':''}>${t}</option>`).join('');
+const F=(c,l,v='',t='text',x='')=>`<label>${l}<code>${c}</code><input name="${c}" type="${t}" value="${esc(v)}" ${x}></label>`;
+const TA=(c,l,v='',x='')=>`<label>${l}<code>${c}</code><textarea name="${c}" ${x}>${esc(v)}</textarea></label>`;
+const Sel=(c,l,o,v)=>`<label>${l}<code>${c}</code><select name="${c}">${opt(o,v)}</select></label>`;
+const gate=r=>`<h1>Not available</h1><p class="card">This page is for ${r}s only.</p>`;
+const myInt=id=>S.ints.find(n=>n.idea===id&&n.inv==='me');
+const card=i=>{const o=S.open[i.id],n=myInt(i.id);
+const btn=S.role==='investor'&&i.own!=='me'?(n&&n.status==='active'?`<button class="ghost" data-act="wd" data-id="${i.id}">Interested ✓ Withdraw</button>`:`<button data-act="int" data-id="${i.id}">I’m Interested</button>`):'';
+return `<article class="card"><div class="row"><h3>${esc(i.title)}</h3><span class="b ${i.status}">${i.status}</span></div>
+<p class="m">${esc(i.business_name)} · ${IND[i.industry_id-1]} · ${TYP[i.idea_type_id-1]}</p>
+<p><b>${egp(i.funding_needed)}</b> · stage: ${label(i.idea_stage)}</p>
+<p>${esc(o?i.description:i.description.slice(0,90)+'…')}</p>
+${o?`<p class="m"><b>Target market:</b> ${esc(i.target_market)}<br><b>Founder:</b> ${i.own==='me'?'You':esc(i.by)}</p>`:''}
+<div class="acts"><button class="ghost" data-act="tog" data-id="${i.id}">${o?'Hide details':'Details'}</button>${btn}</div>
+${S.msgFor===i.id?`<form data-form="int" class="acts" style="display:block"><input type="hidden" name="id" value="${i.id}">${TA('message','Message to founder','','placeholder="Why are you interested?"')}<button>Send interest</button></form>`:''}</article>`};
+const myCard=i=>{const k=S.ints.filter(n=>n.idea===i.id&&n.status==='active').length;
+return `<article class="card"><div class="row"><h3>${esc(i.title)}</h3><span class="b ${i.status}">${i.status}</span></div><p class="m">${IND[i.industry_id-1]} · ${egp(i.funding_needed)} · ${label(i.idea_stage)}</p><p class="m">${k} interested investor${k==1?'':'s'}</p><div class="acts"><button data-act="edit" data-id="${i.id}">Edit</button><button class="ghost" data-act="pub" data-id="${i.id}">${i.status==='published'?'Unpublish':'Publish'}</button></div></article>`};
+const flt=()=>S.ideas.filter(i=>i.status==='published'&&(!S.f.q||(i.title+i.business_name+i.description).toLowerCase().includes(S.f.q.toLowerCase()))&&(!S.f.ind||i.industry_id==S.f.ind)&&(!S.f.max||i.funding_needed<=S.f.max)&&(!S.f.stage||i.idea_stage===S.f.stage));
+const list=()=>{const r=flt();return `<p class="m">${r.length} idea${r.length==1?'':'s'} found</p>`+(r.map(card).join('')||'<p class="card">No ideas match these filters.</p>')};
+const thread=c=>`<div class="card"><div class="row"><div><h3>${esc(c.with)}</h3><p class="m">${esc(c.idea)}</p></div><span class="b ${c.status}">${c.status}</span></div>
+${c.status==='pending'?`<div class="acts"><button data-act="st" data-id="${c.id}:accepted">Simulate accept</button><button class="ghost" data-act="st" data-id="${c.id}:rejected">Simulate reject</button></div>`:''}
+${c.status==='accepted'?`<div class="acts"><button class="ghost" data-act="st" data-id="${c.id}:closed">Close connection</button></div>`:''}
+<div class="chat">${c.msgs.length?c.msgs.map(m=>`<div class="msg ${m.f==='m'?'me':''}">${esc(m.b)}</div>`).join(''):'<p class="m">No messages yet.</p>'}</div>
+<form data-form="msg" data-id="${c.id}" class="acts" style="flex-wrap:nowrap"><input name="message_body" placeholder="${c.status==='accepted'?'Type a message':'Chat opens once accepted'}" ${c.status==='accepted'?'':'disabled'} required><button ${c.status==='accepted'?'':'disabled'}>Send</button></form></div>`;
+const PG={
+home:()=>`<section class="hero"><p class="eyebrow">Entrepreneur–investor platform · Cairo</p><h1>Where Cairo’s ideas meet capital</h1><p class="m">Entrepreneurs post ideas. Investors discover them, show interest and connect.</p><div class="acts">${S.logged?'<a class="btn" href="#dashboard">Go to dashboard</a>':'<a class="btn" href="#auth">Sign up</a>'}${S.role==='entrepreneur'?'':'<a class="btn ghost" href="#explore">Explore ideas</a>'}</div></section>
+<h2>How it works</h2><div class="card"><h3>For entrepreneurs</h3><div class="step"><i>1</i><p>Sign up and choose <b>Entrepreneur</b>.</p></div><div class="step"><i>2</i><p>Submit your idea with its description, industry, funding needed and target market.</p></div><div class="step"><i>3</i><p>Publish it so investors can find it.</p></div><div class="step"><i>4</i><p>Open <b>Interested investors</b> to see who wants to back you.</p></div><div class="step"><i>5</i><p>Open a connection and chat once the investor accepts.</p></div></div><div class="card"><h3>For investors</h3><div class="step"><i>1</i><p>Sign up and choose <b>Investor</b>.</p></div><div class="step"><i>2</i><p>Set your preferences in <b>Account</b>: industries, idea types and funding range.</p></div><div class="step"><i>3</i><p>Explore ideas and filter by industry, funding and stage.</p></div><div class="step"><i>4</i><p>Tap <b>I’m Interested</b> and send a short message.</p></div><div class="step"><i>5</i><p>Accept the connection and chat with the founder.</p></div></div>
+<h2>Our story</h2><div class="card story"><p>Fekra started with a simple observation in Cairo: good ideas and available money rarely find each other.</p><p>Many entrepreneurs have ideas worth building but no way to reach people who can fund them. Many investors have capital to put to work but struggle to find credible ideas that match what they look for.</p><p>Fekra means “idea” in Arabic. We built it to close that gap: entrepreneurs share their ideas, investors discover the ones that fit, and both can start a conversation.</p></div>${S.logged?'':'<h2>Try the demo</h2><div class="acts"><button data-act="demo" data-id="entrepreneur">Demo as entrepreneur</button><button class="ghost" data-act="demo" data-id="investor">Demo as investor</button></div>'}
+<h2>Featured ideas</h2>${S.ideas.filter(i=>i.status==='published').slice(0,3).map(card).join('')}`,
+auth:()=>`<h1>Welcome</h1><div class="tabs"><button class="${S.tab==='signup'?'':'ghost'}" data-act="tab" data-id="signup">Sign up</button><button class="${S.tab==='login'?'':'ghost'}" data-act="tab" data-id="login">Log in</button></div>
+${S.tab==='signup'?`<form class="card" data-form="signup">${F('full_name','Full name',S.me.full_name,'text','required')}${F('email','Email',S.me.email,'email','required')}${F('password','Password','','password','required minlength=6')}${F('phone','Phone',S.me.phone,'tel')}${F('city','City',S.me.city,'text','required')}<button>Create account</button></form>`
+:`<form class="card" data-form="login">${F('email','Email',S.me.email,'email','required')}${F('password','Password','demo123','password','required')}<button>Log in</button></form>`}<p class="note">No real login. Any details work.</p>`,
+role:()=>`<h1>Choose your role</h1><p class="m">Stored as <code>user_profiles.role</code>. This can’t be changed later.</p>
+<div class="card"><h3>💡 Entrepreneur</h3><p>Submit ideas and find investors.</p><button data-act="role" data-id="entrepreneur">I’m an entrepreneur</button></div>
+<div class="card"><h3>💼 Investor</h3><p>Discover ideas and fund the right one.</p><button data-act="role" data-id="investor">I’m an investor</button></div>`,
+dashboard:()=>{const m=S.me;
+if(S.role==='entrepreneur'){const mine=S.ideas.filter(i=>i.own==='me'),k=S.ints.filter(n=>mine.some(i=>i.id===n.idea)&&n.status==='active').length;
+return `<h1>Hello, ${esc(m.full_name.split(' ')[0])}</h1><div class="tiles"><div><b>${mine.length}</b>Ideas</div><div><b>${mine.filter(i=>i.status==='published').length}</b>Published</div><div><b>${k}</b>Interested investors</div><div><b>${S.cons.filter(c=>c.side==='e').length}</b>Connections</div></div>
+<div class="acts"><button data-act="newidea">+ Submit new idea</button><a class="btn ghost" href="#interested">See investors</a></div><h2>My ideas</h2>${mine.map(myCard).join('')}`}
+const mt=S.ideas.filter(i=>i.status==='published'&&i.own!=='me'&&i.funding_needed>=m.min_funding&&i.funding_needed<=m.max_funding&&m.ind.includes(i.industry_id-1));
+return `<h1>Hello, ${esc(m.full_name.split(' ')[0])}</h1><div class="tiles"><div><b>${mt.length}</b>Matches</div><div><b>${S.ints.filter(n=>n.inv==='me'&&n.status==='active').length}</b>My interests</div><div><b>${S.cons.filter(c=>c.side==='i').length}</b>Connections</div><div><b>${egp(m.min_funding/1000)}k+</b>Min ticket</div></div>
+<div class="acts"><a class="btn" href="#explore">Explore all ideas</a><a class="btn ghost" href="#account">Edit preferences</a></div><h2>Matches for your preferences</h2>${mt.map(card).join('')||'<p class="card">No matches yet.</p>'}`},
+idea:()=>{if(S.role!=='entrepreneur')return gate('entrepreneur');
+const E=S.edit?S.ideas.find(i=>i.id===S.edit):{title:'',business_name:'',description:'',industry_id:1,idea_type_id:1,funding_needed:'',target_market:'',idea_stage:'idea',status:'draft'};
+return `<h1>${S.edit?'Edit idea':'Submit an idea'}</h1><form class="card" data-form="idea">${F('title','Idea title',E.title,'text','required maxlength=200')}${F('business_name','Business name',E.business_name)}${TA('description','Description',E.description,'required')}
+${Sel('industry_id','Industry',IND.map((n,k)=>[k+1,n]),E.industry_id)}${Sel('idea_type_id','Idea type',TYP.map((n,k)=>[k+1,n]),E.idea_type_id)}${F('funding_needed','Funding needed','' + E.funding_needed,'number','required min=0')}${Sel('currency','Currency',[['EGP','EGP']],'EGP')}${TA('target_market','Target market',E.target_market,'required')}
+${Sel('idea_stage','Idea stage',STG.map(s=>[s,label(s)]),E.idea_stage)}${Sel('status','Status',[['draft','Draft'],['published','Published']],E.status)}<div class="acts"><button>Save idea</button><a class="btn ghost" href="#dashboard">Cancel</a></div></form>`},
+interested:()=>{if(S.role!=='entrepreneur')return gate('entrepreneur');
+const ids=S.ideas.filter(i=>i.own==='me').map(i=>i.id),L=S.ints.filter(n=>ids.includes(n.idea)&&S.inv[n.inv]);
+return `<h1>Interested investors</h1>`+(L.map(n=>{const v=S.inv[n.inv],i=S.ideas.find(x=>x.id===n.idea),c=S.cons.find(x=>x.int===n.id);
+return `<article class="card"><div class="row"><h3>${esc(v.name)}</h3><span class="b ${n.status}">${n.status}</span></div><p class="m">For: ${esc(i.title)}</p><p>${esc(v.bio)}</p><p class="m">Ticket ${egp(v.min)} – ${egp(v.max)} · prefers ${label(v.stage)}</p><p>“${esc(n.msg)}”</p>
+${n.status!=='active'?'':`<div class="acts">${c?`<button data-act="chat" data-id="${c.id}">Open chat</button>`:`<button data-act="connect" data-id="${n.id}">Open connection</button>`}</div>`}</article>`}).join('')||'<p class="card">No interest yet.</p>')},
+explore:()=>`<h1>Explore ideas</h1><div class="card"><label>Search<code>title</code><input data-f="q" value="${esc(S.f.q)}" placeholder="e.g. solar"></label>
+<div class="g2"><select data-f="ind"><option value="">All industries</option>${opt(IND.map((n,k)=>[k+1,n]),S.f.ind)}</select><select data-f="max">${opt([['','Any funding'],[500000,'≤ 500,000 EGP'],[1000000,'≤ 1,000,000 EGP'],[2000000,'≤ 2,000,000 EGP']],S.f.max)}</select></div>
+<select data-f="stage" style="margin-top:8px"><option value="">All stages</option>${opt(STG.map(s=>[s,label(s)]),S.f.stage)}</select></div><div id="list">${list()}</div>`,
+connections:()=>{const side=S.role==='investor'?'i':'e',cs=S.cons.filter(c=>c.side===side),c=cs.find(x=>x.id===S.cur)||cs[0];
+return `<h1>Connections</h1>`+(c?`<div class="chips">${cs.map(x=>`<button class="chip ${x.id===c.id?'on':''}" data-act="pick" data-id="${x.id}">${esc(x.with)}</button>`).join('')}</div>${thread(c)}`:'<p class="card">No connections yet.</p>')},
+account:()=>{const m=S.me,inv=S.role==='investor';
+return `<h1>Account settings</h1><form class="card" data-form="acct"><h3>Profile <code>user_profiles</code></h3><p></p>${F('full_name','Full name',m.full_name,'text','required')}${F('phone','Phone',m.phone,'tel')}${F('city','City',m.city,'text','required')}${F('avatar_url','Avatar URL',m.avatar_url,'url')}<label>Role<code>role (locked)</code><input value="${S.role}" disabled></label>
+${inv?`<h3>Investor profile <code>investor_profiles</code></h3><p></p>${TA('investor_bio','Investor bio',m.investor_bio)}${F('min_funding','Min funding (EGP)',m.min_funding,'number','min=0')}${F('max_funding','Max funding (EGP)',m.max_funding,'number','min=0')}${Sel('preferred_idea_stage','Preferred idea stage',STG.map(s=>[s,label(s)]),m.preferred_idea_stage)}${Sel('currency','Currency',[['EGP','EGP']],'EGP')}
+<fieldset><legend>Preferred industries</legend>${IND.map((n,k)=>`<label class="ck"><input type="checkbox" name="ind" value="${k}"${m.ind.includes(k)?' checked':''}> ${n}</label>`).join('')}</fieldset>
+<fieldset><legend>Preferred idea types</legend>${TYP.map((n,k)=>`<label class="ck"><input type="checkbox" name="typ" value="${k}"${m.typ.includes(k)?' checked':''}> ${n}</label>`).join('')}</fieldset>`
+:`<h3>Entrepreneur profile <code>entrepreneur_profiles</code></h3><p></p>${F('website_url','Website URL',m.website_url,'url')}${TA('bio','Bio',m.bio)}`}<button>Save changes</button></form>`},
+admin:()=>`<h1>Moderation</h1><p class="m">Simulated admin tools. Nothing is saved.</p><h2>Ideas</h2>${S.ideas.map(i=>`<article class="card"><div class="row"><h3>${esc(i.title)}</h3><span class="b ${i.status}">${i.status}</span></div><p class="m">By ${i.own==='me'?'Nour Hassan':esc(i.by)} · ${egp(i.funding_needed)}</p>${S.flags[i.id]?`<p class="flag">⚑ Reported: ${esc(S.flags[i.id])}</p>`:''}<div class="acts"><button data-act="ap" data-id="${i.id}">Approve</button><button class="ghost" data-act="cl" data-id="${i.id}">Close</button><button class="danger" data-act="rm" data-id="${i.id}">Remove</button></div></article>`).join('')||'<p class="card">No ideas.</p>'}
+<h2>Users</h2>${S.users.map((u,k)=>`<div class="card row"><div><b>${esc(u.n)}</b><p class="m">${u.r}</p></div><div class="acts" style="margin:0">${u.s?'<span class="b rejected">suspended</span>':''}<button class="ghost" data-act="sus" data-id="${k}">${u.s?'Reinstate':'Suspend'}</button></div></div>`).join('')}`};
+const A={
+out(){S.logged=false;S.role=null;go('home')},
+demo(r){S.logged=true;S.role=r;go('dashboard')},
+role(r){S.role=r;toast('Role set: '+r);go('dashboard')},
+tab(t){S.tab=t;render()},
+tog(id){S.open[id]=!S.open[id];render()},
+int(id){S.msgFor=id;S.open[id]=true;render()},
+wd(id){myInt(id).status='withdrawn';toast('Interest withdrawn');render()},
+edit(id){S.edit=id;go('idea')},
+newidea(){S.edit=null;go('idea')},
+pub(id){const i=S.ideas.find(x=>x.id===id);i.status=i.status==='published'?'draft':'published';render()},
+pick(id){S.cur=id;render()},
+chat(id){S.cur=id;go('connections')},
+st(id){const[c,s]=id.split(':'),x=S.cons.find(k=>k.id===c);x.status=s;toast('Connection '+s);render()},
+connect(id){const n=S.ints.find(x=>x.id===id),v=S.inv[n.inv],i=S.ideas.find(x=>x.id===n.idea);
+const c={id:'c'+Date.now(),int:id,side:'e',with:v.name,idea:i.title,status:'pending',msgs:[]};S.cons.push(c);S.cur=c.id;toast('Connection request sent');render();
+setTimeout(()=>{c.status='accepted';c.msgs.push({f:'t',b:'Hi, thanks for reaching out about '+i.title+'. Happy to chat.'});toast('Simulated: investor accepted');render()},1800)},
+ap(id){const i=S.ideas.find(x=>x.id===id);i.status='published';delete S.flags[id];toast('Approved');render()},
+cl(id){S.ideas.find(x=>x.id===id).status='closed';toast('Idea closed');render()},
+rm(id){S.ideas=S.ideas.filter(x=>x.id!==id);S.ints=S.ints.filter(n=>n.idea!==id);delete S.flags[id];toast('Idea removed');render()},
+sus(k){S.users[k].s=S.users[k].s?0:1;render()}};
+const SUB={
+signup(d){Object.assign(S.me,{full_name:d.get('full_name'),email:d.get('email'),phone:d.get('phone'),city:d.get('city')});S.logged=true;go('role')},
+login(d){S.logged=true;go(S.role?'dashboard':'role')},
+idea(d){const o={title:d.get('title'),business_name:d.get('business_name'),description:d.get('description'),industry_id:+d.get('industry_id'),idea_type_id:+d.get('idea_type_id'),funding_needed:+d.get('funding_needed'),currency:'EGP',target_market:d.get('target_market'),idea_stage:d.get('idea_stage'),status:d.get('status')};
+if(S.edit)Object.assign(S.ideas.find(i=>i.id===S.edit),o);else S.ideas.unshift({id:'i'+Date.now(),own:'me',by:'',...o});S.edit=null;toast('Idea saved');go('dashboard')},
+int(d){const id=d.get('id'),n=myInt(id);if(n){n.status='active';n.msg=d.get('message')}else S.ints.push({id:'n'+Date.now(),idea:id,inv:'me',msg:d.get('message'),status:'active'});S.msgFor=null;toast('Interest sent');render()},
+msg(d,id){const c=S.cons.find(x=>x.id===id);c.msgs.push({f:'m',b:d.get('message_body')});render();
+setTimeout(()=>{c.msgs.push({f:'t',b:REPLIES[c.msgs.length%3]});if(S.page==='connections')render()},1200)},
+acct(d){const m=S.me;['full_name','phone','city','avatar_url','website_url','bio','investor_bio','preferred_idea_stage'].forEach(k=>d.has(k)&&(m[k]=d.get(k)));
+if(d.has('min_funding')){const a=+d.get('min_funding'),b=+d.get('max_funding');if(a>b)return toast('Min funding must not exceed max funding');m.min_funding=a;m.max_funding=b;m.ind=d.getAll('ind').map(Number);m.typ=d.getAll('typ').map(Number)}
+toast('Settings saved');render()}};
+const NEED=['role','dashboard','idea','interested','explore','connections','account','admin'];
+function render(){let p=(location.hash||'#home').slice(1);if(!PG[p])p='home';
+if(NEED.includes(p)&&!S.logged)p='auth';else if(NEED.includes(p)&&p!=='role'&&!S.role)p='role';
+if(p==='role'&&S.role)p='dashboard';
+const lock={entrepreneur:['explore'],investor:['idea','interested']}[S.role]||[];
+if(lock.includes(p)){toast('That area is for '+(S.role==='entrepreneur'?'investors':'entrepreneurs')+' only');p='dashboard'}
+const changed=S.page!==p;S.page=p;
+const l=[['home','Home']];
+if(!S.logged)l.push(['auth','Sign up / Login']);else{l.push(['dashboard','Dashboard']);if(S.role==='entrepreneur')l.push(['idea','Submit idea'],['interested','Interested investors']);if(S.role==='investor')l.push(['explore','Explore']);l.push(['connections','Connections'],['account','Account'])}
+if(S.logged)l.push(['admin','Admin']);
+$('#nav').innerHTML=l.map(([h,t])=>`<a href="#${h}" class="${p===h?'on':''}">${t}</a>`).join('');
+$('#who').innerHTML=S.logged?`<span class="chip">${S.role||'No role yet'}</span><button class="chip" data-act="out">Log out</button>`:'';
+$('#app').innerHTML=PG[p]()+'<p class="note">Prototype · simulated data · refreshing resets everything</p>';
+const ch=$('.chat');if(ch)ch.scrollTop=ch.scrollHeight;if(changed)scrollTo(0,0)}
+addEventListener('hashchange',render);
+document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(b&&A[b.dataset.act])A[b.dataset.act](b.dataset.id)});
+document.addEventListener('submit',e=>{e.preventDefault();const f=e.target;SUB[f.dataset.form](new FormData(f),f.dataset.id)});
+document.addEventListener('input',e=>{const k=e.target.dataset.f;if(k){S.f[k]=e.target.value;$('#list').innerHTML=list()}});
+render();
+</script></body></html>
