@@ -32,4 +32,4 @@ Check the API with `curl http://localhost:3001/api/health`.
 ## Security
 
 - Passwords are stored only as bcrypt hashes and never returned.
-- Never commit `.env`. If a secret is ever pushed, change it.
+- Never commit `.env`. If a secret is ever pushed, change it. 
